@@ -17,32 +17,34 @@ if (not defined $input_file or not defined $output_file) {
 }
 
 # Open input file
-open my $input, '<', $input_file or die "Could not open '$input_file' $!\n";
+open my $input, '<', $input_file or die "Could not open '$input_file': $!\n";
 
 # Create parser
 my $csv = Text::CSV->new({ binary => 1, auto_diag => 1 });
 
-# Read the first row to determine the number of columns
-my $row = $csv->getline($input);
-my $num_columns = scalar @$row;
+# Read all rows to determine the maximum number of columns
+my @rows;
+my $max_columns = 0;
+while (my $row = $csv->getline($input)) {
+    push @rows, $row;
+    my $num_columns = scalar @$row;
+    $max_columns = $num_columns if $num_columns > $max_columns;
+}
 
 # Create header
-my @header = map { "column$_" } (0 .. $num_columns - 1);
+my @header = map { "column$_" } (0 .. $max_columns - 1);
 
 # Open output file
-open my $output, '>', $output_file or die "Could not open '$output_file' $!\n";
+open my $output, '>', $output_file or die "Could not open '$output_file': $!\n";
 
 # Write header to output file
 $csv->print($output, \@header);
 print $output "\n";
 
-# Write the first row of data to output file
-$csv->print($output, $row);
-print $output "\n";
-
-# Write the rest of the data to output file
-while (my $row = $csv->getline($input)) {
-    $csv->print($output, $row);
+# Write all rows of data to output file, ensuring each row has the correct number of columns
+foreach my $row (@rows) {
+    my @extended_row = (@$row, ('') x ($max_columns - @$row));
+    $csv->print($output, \@extended_row);
     print $output "\n";
 }
 
