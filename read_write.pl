@@ -34,6 +34,22 @@ while (my $row = $csv->getline($input)) {
 # Create header
 my @header = map { "column$_" } (0 .. $max_columns - 1);
 
+# Create a hash to store the CSV data
+my %csv_hash;
+my $row_index = 0;
+
+# Store data in hash
+foreach my $row (@rows) {
+    my %row_hash;
+    @row_hash{@header} = (@$row, ('') x ($max_columns - @$row));
+    $csv_hash{$row_index} = \%row_hash;
+    $row_index++;
+}
+
+# Print the size of the hash
+my $hash_size = scalar keys %csv_hash;
+print "Hash Size: $hash_size $!\n";
+
 # Open output file
 open my $output, '>', $output_file or die "Could not open '$output_file': $!\n";
 
