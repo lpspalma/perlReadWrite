@@ -23,7 +23,7 @@ This Perl script processes CSV files by performing data manipulation and generat
 
 **Usage**
 **Running the Script**
-- perl csv_processor.pl -i <Input_CSV_file> -o <Output_CSV_file>
+- perl read_write.pl -i <Input_CSV_file> -o <Output_CSV_file>
 - -i <Input_CSV_file>: Specifies the input CSV file to be processed.
 - -o <Output_CSV_file>: Specifies the output CSV file to which processed data will be written.
 
