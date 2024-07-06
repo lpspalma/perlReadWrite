@@ -1,52 +1,58 @@
-Documentation and Structure
-Constants (START_COLUMN, END_COLUMN):
+### Documentation and Structure
 
-Defined for clarity and easy modification of the range of columns processed.
-Typeglob Alias (calculate_sums_and_counts):
+**Constants (`START_COLUMN`, `END_COLUMN`):**
+- Defined for clarity and easy modification of the range of columns processed.
 
-Provides an alias for the calculate_sums function, enhancing code readability.
-Main Subroutine (main):
+**Typeglob Alias (`calculate_sums_and_counts`):**
+- Provides an alias for the `calculate_sums` function, enhancing code readability.
 
-Orchestrates the script execution, calling functions in sequence and handling the main workflow.
-Error Handling:
+**Main Subroutine (`main`):**
+- Orchestrates the script execution, calling functions in sequence and handling the main workflow.
 
-Functions use die statements with clear error messages to handle potential issues with file operations and command-line arguments.
-Functions:
+**Error Handling:**
+- Functions use `die` statements with clear error messages to handle potential issues with file operations and command-line arguments.
 
-Each function has a clear purpose and is documented with comments to explain its role and inputs.
-Command-Line Argument Parsing:
+**Functions:**
+- Each function has a clear purpose and is documented with comments to explain its role and inputs.
 
-Uses GetOptions for parsing command-line arguments (-i for input file, -o for output file) and validates their presence.
-Usage Function (usage):
+**Command-Line Argument Parsing:**
+- Uses `GetOptions` for parsing command-line arguments (`-i` for input file, `-o` for output file) and validates their presence.
 
-Displays a usage message with an error explanation and terminates the script.
-Test Plan
-Test Scenarios
-Basic Functionality:
+**Usage Function (`usage`):**
+- Displays a usage message with an error explanation and terminates the script.
 
-Provide valid input and output file paths.
-Verify that the script completes without errors and generates the expected output file.
-Missing Input File:
+### Test Plan
 
-Provide a non-existent input file path.
-Ensure the script outputs an appropriate error message indicating the file could not be opened.
-Missing Output File:
+#### Test Scenarios
 
-Provide a valid input file path and a non-existent output file path.
-Ensure the script outputs an appropriate error message indicating the output file could not be opened.
-Invalid Command-Line Arguments:
+- **Basic Functionality:**
+  - Provide valid input and output file paths.
+  - Verify that the script completes without errors and generates the expected output file.
 
-Execute the script with incorrect command-line arguments.
-Verify that the script outputs an error message with usage instructions.
-Large CSV File:
+- **Missing Input File:**
+  - Provide a non-existent input file path.
+  - Ensure the script outputs an appropriate error message indicating the file could not be opened.
 
-Provide a large CSV file as input.
-Confirm that the script processes the file correctly and efficiently, handling the size without issues.
-CSV File with Missing Data:
+- **Missing Output File:**
+  - Provide a valid input file path and a non-existent output file path.
+  - Ensure the script outputs an appropriate error message indicating the output file could not be opened.
 
-Provide a CSV file where some rows have missing values.
-Ensure the script correctly handles missing values and processes the file without errors.
-Execution
-Execute each test scenario manually or automate them using a test framework like Test::More for Perl.
+- **Invalid Command-Line Arguments:**
+  - Execute the script with incorrect command-line arguments.
+  - Verify that the script outputs an error message with usage instructions.
 
-For manual testing, run the script with different scenarios and validate the output against expected results.
+- **Large CSV File:**
+  - Provide a large CSV file as input.
+  - Confirm that the script processes the file correctly and efficiently, handling the size without issues.
+
+- **CSV File with Missing Data:**
+  - Provide a CSV file where some rows have missing values.
+  - Ensure the script correctly handles missing values and processes the file without errors.
+
+### Execution
+
+- Execute each test scenario manually or automate them using a test framework like `Test::More` for Perl.
+- For manual testing, run the script with different scenarios and validate the output against expected results.
+
+This structure ensures the script is well-documented, handles errors gracefully, and includes a comprehensive test plan for validation and verification of its functionality. Adjust the test scenarios based on specific requirements and environments as needed.
+
