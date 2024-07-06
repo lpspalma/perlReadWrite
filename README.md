@@ -36,13 +36,13 @@ This Perl script processes CSV files by performing data manipulation and generat
 2. Execute the test script:
 - perl CSVProcessorTest.pl
   - **Functions**
-    -**read_csv_data**
+    - **read_csv_data**
       - Purpose: Reads CSV data from a file into a hash structure.
       - **Scenarios Tested**
         - Positive Scenario: Normal CSV data processing.
         - Negative Scenario: Empty CSV file handling.
         - Edge Scenario: CSV file with varying row lengths.
-    -**write_output**
+    - **write_output**
       - Purpose: Writes processed CSV data from a hash structure to an output file.
       - **Scenarios Tested**
         - Positive Scenario: Normal output file creation.
