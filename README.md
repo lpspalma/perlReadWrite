@@ -1,11 +1,5 @@
 ### Documentation and Structure
 
-**Constants (`START_COLUMN`, `END_COLUMN`):**
-- Defined for clarity and easy modification of the range of columns processed.
-
-**Typeglob Alias (`calculate_sums_and_counts`):**
-- Provides an alias for the `calculate_sums` function, enhancing code readability.
-
 **Main Subroutine (`main`):**
 - Orchestrates the script execution, calling functions in sequence and handling the main workflow.
 
