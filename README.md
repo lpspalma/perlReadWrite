@@ -35,10 +35,19 @@ This Perl script processes CSV files by performing data manipulation and generat
 1. Navigate to the directory containing CSVProcessorTest.pl.
 2. Execute the test script:
 - perl CSVProcessorTest.pl
-  - **Test Scenarios**
-    - Positive Scenario: Normal CSV data processing.
-    - Negative Scenario: Empty CSV file handling.
-    - Edge Scenario: CSV file with varying row lengths.
+  - **Functions**
+    -**read_csv_data**
+      - Purpose: Reads CSV data from a file into a hash structure.
+      - **Scenarios Tested**
+        - Positive Scenario: Normal CSV data processing.
+        - Negative Scenario: Empty CSV file handling.
+        - Edge Scenario: CSV file with varying row lengths.
+    -**write_output**
+      - Purpose: Writes processed CSV data from a hash structure to an output file.
+      - **Scenarios Tested**
+        - Positive Scenario: Normal output file creation.
+        - Negative Scenario: Output file in a non-existent directory.
+        - Edge Scenario: Output file with permission denied
       
 ### Contributing
 Contributions are welcome! If you find any issues or have suggestions for improvements, please submit an issue or a pull request.
