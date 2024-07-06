@@ -1,52 +1,48 @@
-### Documentation and Structure
+### CSV Processor Perl Script
 
-**Main Subroutine (`main`):**
-- Orchestrates the script execution, calling functions in sequence and handling the main workflow.
+**Overview**
+This Perl script processes CSV files by performing data manipulation and generating statistics. It consists of modules for CSV file handling (CSVProcessor.pm) and data processing (DataProcessor.pm).
 
-**Error Handling:**
-- Functions use `die` statements with clear error messages to handle potential issues with file operations and command-line arguments.
+**Features**
+- CSVProcessor Module: Handles reading CSV data into a hash and writing processed data back to CSV files.
+- DataProcessor Module: Calculates sums, counts positive/negative values, and calculates percentages based on specified columns.
+- Main Script (read_write.pl): Orchestrates the workflow, including command-line argument parsing, invoking data processing functions, and outputting results.
 
-**Functions:**
-- Each function has a clear purpose and is documented with comments to explain its role and inputs.
+**Dependencies**
+- Perl 5
+- Required Perl modules:
+- - Text::CSV: For handling CSV files.
+  - Getopt::Long: For command-line argument parsing.
+  - File::Temp: For creating temporary files in tests.
+  - Test::More: For writing unit tests.
 
-**Command-Line Argument Parsing:**
-- Uses `GetOptions` for parsing command-line arguments (`-i` for input file, `-o` for output file) and validates their presence.
+**Installation**
+- Perl Installation: Ensure Perl 5 is installed on your system.
+- Module Installation: Install required Perl modules using CPAN or your preferred package manager: cpan Text::CSV Getopt::Long File::Temp Test::More
 
-**Usage Function (`usage`):**
-- Displays a usage message with an error explanation and terminates the script.
 
-### Test Plan
+**Usage**
+**Running the Script**
+- perl csv_processor.pl -i <Input_CSV_file> -o <Output_CSV_file>
+- -i <Input_CSV_file>: Specifies the input CSV file to be processed.
+- -o <Output_CSV_file>: Specifies the output CSV file to which processed data will be written.
 
-#### Test Scenarios
 
-- **Basic Functionality:**
-  - Provide valid input and output file paths.
-  - Verify that the script completes without errors and generates the expected output file.
+### Testing
 
-- **Missing Input File:**
-  - Provide a non-existent input file path.
-  - Ensure the script outputs an appropriate error message indicating the file could not be opened.
+#### Running Unit Tests
 
-- **Missing Output File:**
-  - Provide a valid input file path and a non-existent output file path.
-  - Ensure the script outputs an appropriate error message indicating the output file could not be opened.
+1. Navigate to the directory containing CSVProcessorTest.pl.
+2. Execute the test script:
+- perl CSVProcessorTest.pl
+  - **Test Scenarios**
+    - Positive Scenario: Normal CSV data processing.
+    - Negative Scenario: Empty CSV file handling.
+    - Edge Scenario: CSV file with varying row lengths.
+      
+### Contributing
+Contributions are welcome! If you find any issues or have suggestions for improvements, please submit an issue or a pull request.
 
-- **Invalid Command-Line Arguments:**
-  - Execute the script with incorrect command-line arguments.
-  - Verify that the script outputs an error message with usage instructions.
-
-- **Large CSV File:**
-  - Provide a large CSV file as input.
-  - Confirm that the script processes the file correctly and efficiently, handling the size without issues.
-
-- **CSV File with Missing Data:**
-  - Provide a CSV file where some rows have missing values.
-  - Ensure the script correctly handles missing values and processes the file without errors.
-
-### Execution
-
-- Execute each test scenario manually or automate them using a test framework like `Test::More` for Perl.
-- For manual testing, run the script with different scenarios and validate the output against expected results.
-
-This structure ensures the script is well-documented, handles errors gracefully, and includes a comprehensive test plan for validation and verification of its functionality. Adjust the test scenarios based on specific requirements and environments as needed.
+### License
+This script is released under the same terms as Perl itself.
 
