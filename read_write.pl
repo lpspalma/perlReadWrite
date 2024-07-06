@@ -1,8 +1,10 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Text::CSV;
 use Getopt::Long;
+use lib '.';  # Ensure the script can find the modules
+use CSVProcessor qw(read_csv_data write_output);
+use DataProcessor qw(calculate_sums count_values calculate_percentages);
 
 =head1 NAME
 
@@ -37,7 +39,6 @@ Lucas Palma
 
 =cut
 
-# Main subroutine to coordinate the script
 sub main {
     my ($input_file, $output_file) = @_;
 
@@ -64,121 +65,6 @@ sub main {
     return 0;  # Return success code
 }
 
-# Subroutine to read CSV data
-sub read_csv_data {
-    my ($input_file) = @_;
-    open my $input, '<', $input_file or die "Error: Could not open '$input_file': $!\n";
-    my $csv = Text::CSV->new({ binary => 1, auto_diag => 1 });
-
-    my @rows;
-    my $max_columns = 0;
-    while (my $row = $csv->getline($input)) {
-        push @rows, $row;
-        my $num_columns = scalar @$row;
-        $max_columns = $num_columns if $num_columns > $max_columns;
-    }
-    close $input;
-
-    # Generate header based on maximum columns found
-    my @header = map { "column$_" } (0 .. $max_columns - 1);
-
-    my %csv_hash;
-    my $row_index = 0;
-
-    foreach my $row (@rows) {
-        my %row_hash;
-        @row_hash{@header} = (@$row, ('') x ($max_columns - @$row));
-        $csv_hash{$row_index} = \%row_hash;
-        $row_index++;
-    }
-
-    return (\%csv_hash, \@header);
-}
-
-# Subroutine to calculate sums
-sub calculate_sums {
-    my ($csv_hash, $start_column, $end_column) = @_;
-    my %sums;
-
-    foreach my $col_num ($start_column .. $end_column) {
-        my $col_name = "column$col_num";
-        $sums{$col_name} = 0;
-
-        foreach my $row_index (keys %$csv_hash) {
-            my $value = $csv_hash->{$row_index}{$col_name} || 0;
-            $sums{$col_name} += $value;
-        }
-    }
-
-    return \%sums;
-}
-
-# Subroutine to count positive and negative values
-sub count_values {
-    my ($csv_hash, $start_column, $end_column) = @_;
-    my %counts;
-
-    foreach my $col_num ($start_column .. $end_column) {
-        my $col_name = "column$col_num";
-        $counts{$col_name}{positive} = 0;
-        $counts{$col_name}{negative} = 0;
-        $counts{$col_name}{total} = 0;
-
-        foreach my $row_index (keys %$csv_hash) {
-            my $value = $csv_hash->{$row_index}{$col_name} || 0;
-
-            if ($value > 0) {
-                $counts{$col_name}{positive}++;
-            } elsif ($value < 0) {
-                $counts{$col_name}{negative}++;
-            }
-            $counts{$col_name}{total}++;
-        }
-    }
-
-    return \%counts;
-}
-
-# Subroutine to calculate percentages
-sub calculate_percentages {
-    my ($counts) = @_;
-    my %percentages;
-
-    foreach my $col_name (keys %$counts) {
-        if ($counts->{$col_name}{total} > 0) {
-            $percentages{$col_name}{positive} = ($counts->{$col_name}{positive} / $counts->{$col_name}{total}) * 100;
-            $percentages{$col_name}{negative} = ($counts->{$col_name}{negative} / $counts->{$col_name}{total}) * 100;
-        } else {
-            $percentages{$col_name}{positive} = 0;
-            $percentages{$col_name}{negative} = 0;
-        }
-    }
-
-    return \%percentages;
-}
-
-# Subroutine to write output file
-sub write_output {
-    my ($csv_hash, $header, $output_file) = @_;
-
-    open my $output, '>', $output_file or die "Error: Could not open '$output_file' for writing: $!\n";
-    my $csv = Text::CSV->new({ binary => 1, auto_diag => 1 });
-
-    # Write header to output file
-    $csv->print($output, $header);
-    print $output "\n";
-
-    # Write each row of CSV data to output file
-    foreach my $row_index (sort { $a <=> $b } keys %$csv_hash) {
-        my @row_data = map { $csv_hash->{$row_index}{$_} } @$header;
-        $csv->print($output, \@row_data);
-        print $output "\n";
-    }
-
-    close $output;
-}
-
-# Subroutine to print sums, counts, and percentages
 sub print_data_summary {
     my ($sums, $counts, $percentages) = @_;
 
@@ -190,22 +76,27 @@ sub print_data_summary {
     }
 }
 
-# Command line argument parsing
 my $input_file;
 my $output_file;
 
-GetOptions('i=s' => \$input_file, 'o=s' => \$output_file) or usage("Error: Invalid command line arguments.");
+unless (caller) {
+    GetOptions('i=s' => \$input_file, 'o=s' => \$output_file) or usage("Error: Invalid command line arguments.");
 
-unless (defined $input_file and defined $output_file) {
-    usage("Error: Both input (-i) and output (-o) files must be specified.");
+    unless (defined $input_file and defined $output_file) {
+        usage("Error: Both input (-i) and output (-o) files must be specified.");
+    }
+
+    my $exit_code = main($input_file, $output_file);
+    exit $exit_code;
 }
 
-# Run the main subroutine and handle errors
-my $exit_code = main($input_file, $output_file);
-exit $exit_code;
-
-# Subroutine to display usage message and exit
 sub usage {
     my ($message) = @_;
     die "$message\nUsage: $0 -i <Original CSV file> -o <Output CSV file>\n";
 }
+
+=head1 LICENSE
+
+This script is released under the same terms as Perl itself.
+
+=cut
