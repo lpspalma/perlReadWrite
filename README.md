@@ -1,4 +1,4 @@
-**Documentation and Structure
+Documentation and Structure
 Constants (START_COLUMN, END_COLUMN):
 
 Defined for clarity and easy modification of the range of columns processed.
@@ -49,4 +49,4 @@ Ensure the script correctly handles missing values and processes the file withou
 Execution
 Execute each test scenario manually or automate them using a test framework like Test::More for Perl.
 
-For manual testing, run the script with different scenarios and validate the output against expected results.**
+For manual testing, run the script with different scenarios and validate the output against expected results.
