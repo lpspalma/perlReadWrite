@@ -20,7 +20,6 @@ This Perl script processes CSV files by performing data manipulation and generat
 - Perl Installation: Ensure Perl 5 is installed on your system.
 - Module Installation: Install required Perl modules using CPAN or your preferred package manager: cpan Text::CSV Getopt::Long File::Temp Test::More
 
-
 **Usage**
 **Running the Script**
 - perl csv_processor.pl -i <Input_CSV_file> -o <Output_CSV_file>
@@ -48,10 +47,23 @@ This Perl script processes CSV files by performing data manipulation and generat
         - Positive Scenario: Normal output file creation.
         - Negative Scenario: Output file in a non-existent directory.
         - Edge Scenario: Output file with permission denied
-      
-### Contributing
-Contributions are welcome! If you find any issues or have suggestions for improvements, please submit an issue or a pull request.
-
-### License
-This script is released under the same terms as Perl itself.
-
+- perl DataProcessorTest.pl
+  - **Functions**
+    - **calculate_sums**
+      - Purpose: Calculates the sum of values across specified columns in a CSV-like hash structure.
+      - **Scenarios Tested**
+        - Positive Scenario: Validates correct calculation of sums for various columns.
+        - Negative Scenario: Handles empty data gracefully.
+        - Edge Scenario: Handles large dataset with multiple columns. 
+     - **count_values**
+       - Purpose: Counts positive, negative, and total values across specified columns in a CSV-like hash structure.
+       - **Scenarios Tested**
+         - Positive Scenario: Counts correctly for positive and negative values.
+         - Negative Scenario: Handles empty data gracefully.
+         - Edge Scenario: Handles data with no negative values.
+    - **calculate_percentages**
+      - Purpose: Calculates the percentage of positive and negative values relative to the total count for specified columns.
+      - **Scenarios Tested**
+        - Positive Scenario: Calculates percentages accurately for positive and negative values.
+        - Negative Scenario: Handles scenarios where total count is zero gracefully.
+        - Edge Scenario: Handles scenarios with extreme values (e.g., all values positive or negative).
