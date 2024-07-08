@@ -53,4 +53,3 @@ sub write_output {
     close $output;
 }
 
-1;
