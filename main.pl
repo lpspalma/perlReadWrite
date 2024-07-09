@@ -94,9 +94,3 @@ sub usage {
     my ($message) = @_;
     die "$message\nUsage: $0 -i <Original CSV file> -o <Output CSV file>\n";
 }
-
-=head1 LICENSE
-
-This script is released under the same terms as Perl itself.
-
-=cut

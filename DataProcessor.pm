@@ -64,5 +64,3 @@ sub calculate_percentages {
 
     return \%percentages;
 }
-
-1;
